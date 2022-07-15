@@ -1,9 +1,20 @@
 // ==UserScript==
 // @name BGA OPEN LEFT TILES
+// @BGA Carcassone Counter of Tiles
+// @icon        
+// @author       Noelia Walter
+// @version      0.5
 // @namespace AceScript Scripts
 // @match https://boardgamearena.com/*
-// @grant GM.getValue
+// @updateURL    https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
+// @downloadURL  https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
+// @grant    none
+// @run-at       document-end
 // ==/UserScript==
+
+
+
+
 rio=document.getElementById('menu_option_value_106').innerHTML;
 princessDragons=document.getElementById('menu_option_value_107').innerHTML;
 innsAndCathedrals=document.getElementById('menu_option_value_103').innerHTML;
