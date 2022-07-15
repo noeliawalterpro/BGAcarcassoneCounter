@@ -15,10 +15,10 @@
 
 
 
-rio=document.getElementById('menu_option_value_106').innerHTML;
-princessDragons=document.getElementById('menu_option_value_107').innerHTML;
-innsAndCathedrals=document.getElementById('menu_option_value_103').innerHTML;
-builders=document.getElementById('menu_option_value_104').innerHTML;
+var rio=document.getElementById('menu_option_value_106').innerHTML;
+var princessDragons=document.getElementById('menu_option_value_107').innerHTML;
+var innsAndCathedrals=document.getElementById('menu_option_value_103').innerHTML;
+var builders=document.getElementById('menu_option_value_104').innerHTML;
 
 if (princessDragons=='No'  && rio=='No' && innsAndCathedrals=='No' && builders=='No'){
 
