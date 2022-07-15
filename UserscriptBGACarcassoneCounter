@@ -98,7 +98,7 @@ cursor: pointer;
 </head>
 <body>
 
-<h2>Tiles Left Counter</h2>
+<h2>Tiles Counter</h2>
 
 <!-- Trigger/Open Tiles Left -->
 <button id="myBtn" style="    border: 0;
@@ -114,6 +114,8 @@ box-shadow: 5px 5px green;">Open </button>
 
 
 <div id="leftTile"></div>
+
+
 <!-- The Modal -->
 <div id="myModal" class="modal">
 
@@ -191,6 +193,7 @@ var htmlTiles=""
 var borderShadow;
 var borderColor;
 
+
 var opacity;
 for ( i = 0; i <selectedTiles.length; i++ ) {
 opacity = leftTiles[i] === 0 ? '0.4' : '1';
@@ -213,8 +216,8 @@ opacity = leftTiles[i] === 0 ? '0.4' : '1';
  borderColor = leftTiles[i] === 0 ? '#CCC' : 'white';
 borderShadow = leftTiles[i] > 0 ? 'rgba(0,0,0,0.19)': '0' ;
 borderColor = leftTiles[i] < qtyTiles[i] ? 'red' : 'white';
-if (leftTiles[i] === 0){
-    htmlUsedTiles +='<div style="opacity:'+String('1')+'; border:4px solid ' +String( borderColor)+';transform: scale(0.75);  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 5px; align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
+if (leftTiles[i] > 0){
+    htmlUsedTiles +='<div style="opacity:'+String('1')+'; border:4px solid ' +String( borderColor)+';transform: scale(0.75);  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex;  align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
     htmlUsedTiles +='  <div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
     htmlUsedTiles +='</div>'
 }
@@ -226,6 +229,7 @@ document.getElementById('leftTile').innerHTML=htmlUsedTiles;
 document.getElementById('myModalTiles').innerHTML ='<div><li>RemaingTiles '+ String(remaningTiles)+' </li></div>'; 
 
 document.getElementById('myModalTiles').innerHTML +='<div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;">'+htmlTiles+'</div>';
+
 /// END on the of the turn
 }
 
