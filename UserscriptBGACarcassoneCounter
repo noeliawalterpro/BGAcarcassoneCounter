@@ -3,7 +3,7 @@
 // @description  BGA Carcassone Counter of Tiles
 // @icon        
 // @author       Noelia Walter
-// @version      0.9
+// @version      0.9.1
 // @namespace AceScript Scripts
 // @match https://boardgamearena.com/*
 // @updateURL    https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
@@ -90,7 +90,7 @@ function counterTile() {
 
         borderShadow = leftTiles[i] > 0 ? 'rgba(0,0,0,0.19)': '0' ;
         borderColor = leftTiles[i] < qtyTiles[i] ? 'black' : 'white';
-        borderColor = leftTiles[i] === 0 ? 'red' : 'white';
+        borderColor = leftTiles[i] < qtyTiles[i] ? 'red' : 'white';
         //if (leftTiles[i] != 0){
         htmlTiles +='<div style="opacity:'+String(opacity)+'; border:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
         htmlTiles +='  <div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
@@ -119,7 +119,7 @@ function counterTile() {
 
     document.getElementById('myModalTiles').innerHTML ='<div><li>RemaingTiles '+ String(remaningTiles)+' </li></div>';
 
-    document.getElementById('myModalTiles').innerHTML +='<div style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;">'+htmlTiles+'</div>';
+    document.getElementById('myModalTiles').innerHTML +='<div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;">'+htmlTiles+'</div>';
 
     /// END on the of the turn
 }
@@ -129,7 +129,7 @@ if (princessDragons=='No' && rio=='No'&& innsAndCathedrals=='No' && builders=='N
     var idTile='upperrightmenu';
     var squaresize="89px";
     document.getElementById(idTile).innerHTML=document.getElementById(idTile).innerHTML+`
-<div id="modal-tile-box" style="background: white;position: fixed;top: 122px;left: 0;padding: 10px;width: 300px;"></div>`;
+<div id="modal-tile-box" style="background: #f8f8f8;position: absolute;top: 122px;left: -85vw;padding: 10px;width: 300px;"></div>`;
     document.getElementById('modal-tile-box').innerHTML +=`<style>
 body {font-family: Arial, Helvetica, sans-serif;}
 
@@ -147,12 +147,12 @@ top: 0;
 width: 100%; /* Full width */
 height: 100%; /* Full height */
 overflow: auto; /* Enable scroll if needed */
-background-color: rgb(0,0,0); /* Fallback color */
+background-color: #f8f8f8; /* Fallback color */
 background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 }
 
 div#leftTile {
-    display: grid;
+    display: none;
     grid-template-columns: 1fr 1fr 1fr;
     overflow-y: scroll;
 height: 320px;
@@ -160,7 +160,7 @@ height: 320px;
 
 /* Modal Content */
 .modal-content {
-background-color: #fefefe;
+background-color:  #f8f8f8;
 margin: auto;
 padding: 20px;
 border: 1px solid #888;
@@ -174,7 +174,27 @@ float: right;
 font-size: 28px;
 font-weight: bold;
 }
+#arrowdown,#arrowtop{
+display: block;
+position: absolute;
+background-image: url('../../../img/common/arrows.png');
+width: 32px;
+height: 32px;
+}
+#arrowtop{
+top: 0px;
+left: 50%;
+background-position: 0px 32px;
+  background-position-x: 0px;
+  background-position-y: 32px;
+}
 
+
+#arrowdown{
+bottom: 0px;
+left: 50%;
+background-position: 32px 32px;
+}
 .close:hover,
 .close:focus {
 color: #000;
@@ -208,7 +228,9 @@ grid-column:1/3;
 color:white;
 background: blue;
 font-size: 20px;
-box-shadow: 5px 5px green;">Hide Left Tiles </button>
+box-shadow: 5px 5px green;">Hide Left Tiles <span id="arrowdown"> <span></button>
+
+
 <button id="myBtn3" style="    border: 0;
 padding: 10px;
 width: 100%;
@@ -216,7 +238,7 @@ grid-column:1/3;
 color:white;
 background: blue;
 font-size: 20px;
-box-shadow: 5px 5px green;">Show Left Tiles </button>
+box-shadow: 5px 5px green;">Show Left Tiles<span id="arrowtop">  </button>
 
 <div id="leftTile"></div>
 
@@ -225,7 +247,7 @@ box-shadow: 5px 5px green;">Show Left Tiles </button>
 <div id="myModal" class="modal">
 
 <!-- Modal content -->
-<div class="modal-content">
+<div class="modal-content" >
 <h2>Tiles Left Counter</h2>
 <span class="close">&times;</span>
 <div id="myModalTiles"></div>
@@ -245,12 +267,16 @@ box-shadow: 5px 5px green;">Show Left Tiles </button>
 
     // Get the <span> element that closes the modal
     var span = document.getElementsByClassName("close")[0];
-
+ const box = document.getElementById('leftTile');
     // When the user clicks the button, open the modal
     btn.onclick = function(){
         modal.style.display = "block";
         btn2.style.display = 'block';
+        box.style.display= 'grid';
         counterTile();
+   
+
+      
     }
     document.getElementById('leftTile').innerHTML=htmlUsedTiles;
 
@@ -258,23 +284,27 @@ box-shadow: 5px 5px green;">Show Left Tiles </button>
     const btn3 = document.getElementById('myBtn3');
     btn2.style.display = 'none';
     btn3.style.display = 'none';
+
+
+    //SHOW BUTTON
     btn3.addEventListener('click', () => {
         // 👇️ hide button (still takes up space on page)
         btn2.style.display = 'block';
         btn3.style.display = 'none';
 
         // 👇️ show div
-        const box = document.getElementById('leftTile');
+
 
         box.style.display= 'grid';
     });
+    //HIDE BUTTON
     btn2.addEventListener('click', () => {
         // 👇️ hide button (still takes up space on page)
         btn2.style.display = 'none';
         btn3.style.display = 'block';
 
         // 👇️ show div
-        const box = document.getElementById('leftTile');
+
 
         box.style.display = 'none';
     });
