@@ -1,25 +1,31 @@
 // ==UserScript==
-// @name BGA OPEN LEFT TILES
+// @name BGA OPEN LEFT TILES INNS
 // @description  BGA Carcassone Counter of Tiles
-// @icon        
 // @author       Noelia Walter
-// @version      0.9.1
-// @namespace AceScript Scripts
+// @version      0.9.2
 // @match https://boardgamearena.com/*
 // @updateURL    https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
 // @downloadURL  https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
 // @grant    none
 // @run-at       document-end
+// @noframes
 // ==/UserScript==
 
 
 
+console.log("START USER SCRIPT")
 
-var rio=document.getElementById('menu_option_value_106').innerHTML;
+var idTile='upperrightmenu';
+var squaresize="89px";
+var river=document.getElementById('menu_option_value_106').innerHTML;
 var princessDragons=document.getElementById('menu_option_value_107').innerHTML;
 var innsAndCathedrals=document.getElementById('menu_option_value_103').innerHTML;
 var builders=document.getElementById('menu_option_value_104').innerHTML;
 var htmlUsedTiles="";
+var baseSet =true;
+var innsSet=innsAndCathedrals=="Sí";
+var riverSet=river=="Sí";
+
 function isItemInArray(array, item) {
     for (var i = 0; i < array.length; i++) {
         // This if statement depends on the format of your array
@@ -33,6 +39,7 @@ function isItemInArray(array, item) {
 };
 
 function counterTile() {
+
     /// on the of the turn
     i = 0;
     var text = "";
@@ -49,12 +56,38 @@ function counterTile() {
     console.log(filtered);
 
     var bgaGAME=filtered;
+    var selectedTiles;
 
-    var selectedTiles=[{"set":"BASE","id":0,"qty":1,"tags":["road","road end","city"],"edges":["C","C","R","C"]},{"set":"BASE","id":1,"qty":2,"tags":["road","road end","city","shield"],"edges":["C","C","R","C"]},{"set":"BASE","id":2,"qty":3,"tags":["city","doritos"],"edges":["C","F","F","C"]},{"set":"BASE","id":3,"qty":2,"tags":["city","doritos","shield"],"edges":["C","F","F","C"]},{"set":"BASE","id":4,"qty":3,"tags":["city","doritos","road","curve"],"edges":["C","R","R","C"]},{"set":"BASE","id":5,"qty":2,"tags":["city","doritos","road","curve","shield"],"edges":["C","R","R","C"]},{"set":"BASE","id":6,"qty":1,"tags":["city","join"],"edges":["F","C","F","C"]},{"set":"BASE","id":7,"qty":2,"tags":["city","join","shield"],"edges":["F","C","F","C"]},{"set":"BASE","id":8,"qty":2,"tags":["city","top"],"edges":["C","F","F","C"]},{"set":"BASE","id":9,"qty":3,"tags":["city","top"],"edges":["C","F","C","F"]},{"set":"BASE","id":10,"qty":5,"tags":["city","top"],"edges":["C","F","F","F"]},{"set":"BASE","id":11,"qty":3,"tags":["city","top","road","curve","left"],"edges":["C","F","R","R"]},{"set":"BASE","id":12,"qty":3,"tags":["city","top","road","curve","right"],"edges":["C","R","R","F"]},{"set":"BASE","id":13,"qty":3,"tags":["city","top","road","road end"],"edges":["C","R","R","R"]},{"set":"BASE","id":14,"qty":4,"tags":["city","top","road","straight"],"edges":["C","R","F","R"]},{"set":"BASE","id":15,"qty":8,"tags":["road","straight"],"edges":["R","F","R","F"]},{"set":"BASE","id":16,"qty":9,"tags":["road","curve"],"edges":["F","F","R","R"]},{"set":"BASE","id":17,"qty":4,"tags":["road","road end"],"edges":["F","R","R","R"]},{"set":"BASE","id":18,"qty":1,"tags":["road","road end"],"edges":["R","R","R","R"]},{"set":"BASE","id":19,"qty":4,"tags":["monastery"],"edges":["F","F","F","F"]},{"set":"BASE","id":20,"qty":2,"tags":["monastery","road","road end"],"edges":["F","F","R","F"]},{"set":"BASE","id":21,"qty":1,"tags":["city","shield"],"edges":["C","C","C","C"]},{"set":"BASE","id":22,"qty":3,"tags":["city"],"edges":["C","C","F","C"]},{"set":"BASE","id":23,"qty":1,"tags":["city","shield"],"edges":["C","C","F","C"]}];
+    var qtyTiles;
+    var Bga_TileArt;
 
-    var Bga_TileArt=[[1],[3,2],[6,5,4],[8,7],[11,10,9],[13,12],[14],[16,15],[18,17],[21,20,19],[26,25,24,23,22],[29,28,27],[32,31,30],[35,34,33],[39,38,37,36],[47,46,45,44,43,42,41,40],[56,55,54,53,52,51,50,49,48],[60,59,58,57],[61],[65,64,63,62],[67,66],[68],[71,70,69],[72]]
-    var state2=[1,2,3,2,3,2,1,2,2,3,5,3,3,3,4,8,9,4,1,4,2,1,3,1];
-    var qtyTiles=[1,2,3,2,3,2,1,2,2,3,5,3,3,3,4,8,9,4,1,4,2,1,3,1];
+    var state2;
+    if(innsSet==true){
+
+        Bga_TileArt=[[1],[3,2],[6,5,4],[8,7],[11,10,9],[13,12],[14],[16,15],[18,17],[21,20,19],[26,25,24,23,22],[29,28,27],[32,31,30],[35,34,33],[39,38,37,36],[47,46,45,44,43,42,41,40],[56,55,54,53,52,51,50,49,48],[60,59,58,57],[61],[65,64,63,62],[67,66],[68],[71,70,69],[72],
+                     [73],[74],[75],[76],[77],[78],[79],[80],[81,82],[83],[84],[85],[89],[90]];
+
+        qtyTiles=[1,2,3,2,3,2,1,2,2,3,5,3,3,3,4,8,9,4,1,4,2,1,3,1,
+                  1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1];
+
+
+
+        var allTiles=[{"set":"BASE","id":0,"qty":1,"tags":["road","road end","city"],"edges":["C","C","R","C"]},{"set":"BASE","id":1,"qty":2,"tags":["road","road end","city","shield"],"edges":["C","C","R","C"]},{"set":"BASE","id":2,"qty":3,"tags":["city","doritos"],"edges":["C","F","F","C"]},{"set":"BASE","id":3,"qty":2,"tags":["city","doritos","shield"],"edges":["C","F","F","C"]},{"set":"BASE","id":4,"qty":3,"tags":["city","doritos","road","curve"],"edges":["C","R","R","C"]},{"set":"BASE","id":5,"qty":2,"tags":["city","doritos","road","curve","shield"],"edges":["C","R","R","C"]},{"set":"BASE","id":6,"qty":1,"tags":["city","join"],"edges":["F","C","F","C"]},{"set":"BASE","id":7,"qty":2,"tags":["city","join","shield"],"edges":["F","C","F","C"]},{"set":"BASE","id":8,"qty":2,"tags":["city","top"],"edges":["C","F","F","C"]},{"set":"BASE","id":9,"qty":3,"tags":["city","top"],"edges":["C","F","C","F"]},{"set":"BASE","id":10,"qty":5,"tags":["city","top"],"edges":["C","F","F","F"]},{"set":"BASE","id":11,"qty":3,"tags":["city","top","road","curve","left"],"edges":["C","F","R","R"]},{"set":"BASE","id":12,"qty":3,"tags":["city","top","road","curve","right"],"edges":["C","R","R","F"]},{"set":"BASE","id":13,"qty":3,"tags":["city","top","road","road end"],"edges":["C","R","R","R"]},{"set":"BASE","id":14,"qty":4,"tags":["city","top","road","straight"],"edges":["C","R","F","R"]},{"set":"BASE","id":15,"qty":8,"tags":["road","straight"],"edges":["R","F","R","F"]},{"set":"BASE","id":16,"qty":9,"tags":["road","curve"],"edges":["F","F","R","R"]},{"set":"BASE","id":17,"qty":4,"tags":["road","road end"],"edges":["F","R","R","R"]},{"set":"BASE","id":18,"qty":1,"tags":["road","road end"],"edges":["R","R","R","R"]},{"set":"BASE","id":19,"qty":4,"tags":["monastery"],"edges":["F","F","F","F"]},{"set":"BASE","id":20,"qty":2,"tags":["monastery","road","road end"],"edges":["F","F","R","F"]},{"set":"BASE","id":21,"qty":1,"tags":["city","shield"],"edges":["C","C","C","C"]},{"set":"BASE","id":22,"qty":3,"tags":["city"],"edges":["C","C","F","C"]},{"set":"BASE","id":23,"qty":1,"tags":["city","shield"],"edges":["C","C","F","C"]},{"set":"RIVER","id":65,"qty":1,"tags":["river"],"edges":["F","F","W","F"]},{"set":"RIVER","id":66,"qty":2,"tags":["river"],"edges":["F","W","W","F"]},{"set":"RIVER","id":67,"qty":1,"tags":["river","road","monastery"],"edges":["F","W","R","W"]},{"set":"RIVER","id":68,"qty":1,"tags":["river","road"],"edges":["R","R","W","W"]},{"set":"RIVER","id":69,"qty":2,"tags":["river"],"edges":["W","F","W","F"]},{"set":"RIVER","id":70,"qty":1,"tags":["river"],"edges":["W","F","F","F"]},{"set":"RIVER","id":71,"qty":1,"tags":["river","road","city"],"edges":["W","C","W","R"]},{"set":"RIVER","id":72,"qty":1,"tags":["river","city"],"edges":["C","W","C","W"]},{"set":"RIVER","id":73,"qty":1,"tags":["river","road"],"edges":["R","W","W","R"]},{"set":"RIVER","id":74,"qty":1,"tags":["river","city"],"edges":["W","C","C","W"]},{"set":"INNS","id":24,"qty":1,"tags":["road","curve","inn"],"edges":["F","F","R","R"]},{"set":"INNS","id":25,"qty":1,"tags":["city","road"],"edges":["C","F","R","F"]},{"set":"INNS","id":26,"qty":1,"tags":["road","city","road end","shield"],"edges":["F","F","R","R"]},{"set":"INNS","id":27,"qty":1,"tags":["road","monastery"],"edges":["F","R","F","R"]},{"set":"INNS","id":28,"qty":1,"tags":["road","curve"],"edges":["R","R","R","R"]},{"set":"INNS","id":29,"qty":1,"tags":["city","road","road end"],"edges":["C","R","F","C"]},{"set":"INNS","id":30,"qty":1,"tags":["city"],"edges":["F","C","F","F"]},{"set":"INNS","id":31,"qty":1,"tags":["city"],"edges":["C","C","C","C"]},{"set":"INNS","id":32,"qty":2,"tags":["city","cathedral"],"edges":["C","C","C","C"]},{"set":"INNS","id":33,"qty":1,"tags":["road","straight","inn"],"edges":["F","R","F","R"]},{"set":"INNS","id":34,"qty":1,"tags":["road","road end","inn"],"edges":["F","R","R","R"]},{"set":"INNS","id":35,"qty":1,"tags":["city","road","shield","inn"],"edges":["C","R","R","C"]},{"set":"INNS","id":36,"qty":1,"tags":["city","road","inn"],"edges":["C","F","R","R"]},{"set":"INNS","id":37,"qty":1,"tags":["city","road","road end","inn"],"edges":["C","F","R","C"]},{"set":"INNS","id":38,"qty":1,"tags":["city","shield"],"edges":["C","F","C","C"]},{"set":"INNS","id":39,"qty":1,"tags":["city"],"edges":["C","F","C","C"]},{"set":"INNS","id":40,"qty":1,"tags":["city","road","straight"],"edges":["R","C","R","C"]}];
+        selectedTiles = allTiles.filter((tile) => {
+            return (baseSet === true && tile.set === "BASE" || riverSet === true && tile.set === "RIVER" || innsSet === true && tile.set === "INNS") });
+        console.log(selectedTiles);
+        state2=[1,2,3,2,3,2,1,2,2,3,5,3,3,3,4,8,9,4,1,4,2,1,3,1,
+                1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1];
+
+    }else{
+        selectedTiles=[{"set":"BASE","id":0,"qty":1,"tags":["road","road end","city"],"edges":["C","C","R","C"]},{"set":"BASE","id":1,"qty":2,"tags":["road","road end","city","shield"],"edges":["C","C","R","C"]},{"set":"BASE","id":2,"qty":3,"tags":["city","doritos"],"edges":["C","F","F","C"]},{"set":"BASE","id":3,"qty":2,"tags":["city","doritos","shield"],"edges":["C","F","F","C"]},{"set":"BASE","id":4,"qty":3,"tags":["city","doritos","road","curve"],"edges":["C","R","R","C"]},{"set":"BASE","id":5,"qty":2,"tags":["city","doritos","road","curve","shield"],"edges":["C","R","R","C"]},{"set":"BASE","id":6,"qty":1,"tags":["city","join"],"edges":["F","C","F","C"]},{"set":"BASE","id":7,"qty":2,"tags":["city","join","shield"],"edges":["F","C","F","C"]},{"set":"BASE","id":8,"qty":2,"tags":["city","top"],"edges":["C","F","F","C"]},{"set":"BASE","id":9,"qty":3,"tags":["city","top"],"edges":["C","F","C","F"]},{"set":"BASE","id":10,"qty":5,"tags":["city","top"],"edges":["C","F","F","F"]},{"set":"BASE","id":11,"qty":3,"tags":["city","top","road","curve","left"],"edges":["C","F","R","R"]},{"set":"BASE","id":12,"qty":3,"tags":["city","top","road","curve","right"],"edges":["C","R","R","F"]},{"set":"BASE","id":13,"qty":3,"tags":["city","top","road","road end"],"edges":["C","R","R","R"]},{"set":"BASE","id":14,"qty":4,"tags":["city","top","road","straight"],"edges":["C","R","F","R"]},{"set":"BASE","id":15,"qty":8,"tags":["road","straight"],"edges":["R","F","R","F"]},{"set":"BASE","id":16,"qty":9,"tags":["road","curve"],"edges":["F","F","R","R"]},{"set":"BASE","id":17,"qty":4,"tags":["road","road end"],"edges":["F","R","R","R"]},{"set":"BASE","id":18,"qty":1,"tags":["road","road end"],"edges":["R","R","R","R"]},{"set":"BASE","id":19,"qty":4,"tags":["monastery"],"edges":["F","F","F","F"]},{"set":"BASE","id":20,"qty":2,"tags":["monastery","road","road end"],"edges":["F","F","R","F"]},{"set":"BASE","id":21,"qty":1,"tags":["city","shield"],"edges":["C","C","C","C"]},{"set":"BASE","id":22,"qty":3,"tags":["city"],"edges":["C","C","F","C"]},{"set":"BASE","id":23,"qty":1,"tags":["city","shield"],"edges":["C","C","F","C"]}];
+
+        Bga_TileArt=[[1],[3,2],[6,5,4],[8,7],[11,10,9],[13,12],[14],[16,15],[18,17],[21,20,19],[26,25,24,23,22],[29,28,27],[32,31,30],[35,34,33],[39,38,37,36],[47,46,45,44,43,42,41,40],[56,55,54,53,52,51,50,49,48],[60,59,58,57],[61],[65,64,63,62],[67,66],[68],[71,70,69],[72]]
+        state2=[1,2,3,2,3,2,1,2,2,3,5,3,3,3,4,8,9,4,1,4,2,1,3,1];
+        qtyTiles=[1,2,3,2,3,2,1,2,2,3,5,3,3,3,4,8,9,4,1,4,2,1,3,1];
+
+    };
+
 
 
     //FUNCTIONS
@@ -76,6 +109,7 @@ function counterTile() {
         leftTiles[j]=a;
     };
     leftTiles;
+
     var remaningTiles = leftTiles.reduce((acc, tile) => tile + acc, 0);
 
 
@@ -93,7 +127,7 @@ function counterTile() {
         borderColor = leftTiles[i] < qtyTiles[i] ? 'red' : 'white';
         //if (leftTiles[i] != 0){
         htmlTiles +='<div style="opacity:'+String(opacity)+'; border:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
-        htmlTiles +='  <div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
+        htmlTiles +='<div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
         htmlTiles +='</div>'
         //}
 
@@ -123,14 +157,19 @@ function counterTile() {
 
     /// END on the of the turn
 }
-if (princessDragons=='No' && rio=='No'&& innsAndCathedrals=='No' && builders=='No'){
 
 
-    var idTile='upperrightmenu';
-    var squaresize="89px";
-    document.getElementById(idTile).innerHTML=document.getElementById(idTile).innerHTML+`
+
+
+
+
+
+
+
+
+document.getElementById(idTile).innerHTML=document.getElementById(idTile).innerHTML+=`
 <div id="modal-tile-box" style="background: #f8f8f8;position: absolute;top: 122px;left: -85vw;padding: 10px;width: 300px;"></div>`;
-    document.getElementById('modal-tile-box').innerHTML +=`<style>
+document.getElementById('modal-tile-box').innerHTML +=`<style>
 body {font-family: Arial, Helvetica, sans-serif;}
 
 /* The Modal (background) */
@@ -155,7 +194,7 @@ div#leftTile {
     display: none;
     grid-template-columns: 1fr 1fr 1fr;
     overflow-y: scroll;
-height: 320px;
+height: 60vh;
 }
 
 /* Modal Content */
@@ -165,6 +204,8 @@ margin: auto;
 padding: 20px;
 border: 1px solid #888;
 width: 80%;
+height:80vh;
+overflow-y:scroll;
 }
 
 /* The Close Button */
@@ -258,69 +299,70 @@ box-shadow: 5px 5px green;">Show Left Tiles<span id="arrowtop">  </button>
 
 
 
-    var modal = document.getElementById("myModal");
+var modal = document.getElementById("myModal");
 
 
 
-    // Get the button that opens the modal
-    var btn = document.getElementById("myBtn");
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
 
-    // Get the <span> element that closes the modal
-    var span = document.getElementsByClassName("close")[0];
- const box = document.getElementById('leftTile');
-    // When the user clicks the button, open the modal
-    btn.onclick = function(){
-        modal.style.display = "block";
-        btn2.style.display = 'block';
-        box.style.display= 'grid';
-        counterTile();
-   
-
-      
-    }
-    document.getElementById('leftTile').innerHTML=htmlUsedTiles;
-
-    const btn2 = document.getElementById('myBtn2');
-    const btn3 = document.getElementById('myBtn3');
-    btn2.style.display = 'none';
-    btn3.style.display = 'none';
-
-
-    //SHOW BUTTON
-    btn3.addEventListener('click', () => {
-        // 👇️ hide button (still takes up space on page)
-        btn2.style.display = 'block';
-        btn3.style.display = 'none';
-
-        // 👇️ show div
-
-
-        box.style.display= 'grid';
-    });
-    //HIDE BUTTON
-    btn2.addEventListener('click', () => {
-        // 👇️ hide button (still takes up space on page)
-        btn2.style.display = 'none';
-        btn3.style.display = 'block';
-
-        // 👇️ show div
-
-
-        box.style.display = 'none';
-    });
-    // When the user clicks on <span> (x), close the modal
-    span.onclick = function() {
-        modal.style.display = "none";
-    }
-
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+const box = document.getElementById('leftTile');
+// When the user clicks the button, open the modal
+btn.onclick = function(){
+    modal.style.display = "block";
+    btn2.style.display = 'block';
+    box.style.display= 'grid';
     counterTile();
-    modal.style.display = "none";
+
+
 
 }
+document.getElementById('leftTile').innerHTML=htmlUsedTiles;
+
+const btn2 = document.getElementById('myBtn2');
+const btn3 = document.getElementById('myBtn3');
+btn2.style.display = 'none';
+btn3.style.display = 'none';
+
+
+//SHOW BUTTON
+btn3.addEventListener('click', () => {
+    // 👇️ hide button (still takes up space on page)
+    btn2.style.display = 'block';
+    btn3.style.display = 'none';
+
+    // 👇️ show div
+
+
+    box.style.display= 'grid';
+});
+//HIDE BUTTON
+btn2.addEventListener('click', () => {
+    // 👇️ hide button (still takes up space on page)
+    btn2.style.display = 'none';
+    btn3.style.display = 'block';
+
+    // 👇️ show div
+
+
+    box.style.display = 'none';
+});
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+counterTile();
+modal.style.display = "none";
+
+
+console.log("END USER SCRIPT")
 
