@@ -2,7 +2,7 @@
 // @name BGA OPEN LEFT TILES INNS
 // @description  BGA Carcassone Counter of Tiles
 // @author       Noelia Walter
-// @version      1.0.2
+// @version      1.0.3
 // @match https://boardgamearena.com/*
 // @updateURL    https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
 // @downloadURL  https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
@@ -317,7 +317,7 @@ function printTiles(){
 }
 
 
-newElement.innerHTML=`<div id="modal-tile-box" style="background: #f8f8f8;box-shadow: 3px 3px 3px dimgray;position: fixed;bottom: 0px;left:0;padding: 10px;width: 380px;z-index: 999;"></div>`;
+newElement.innerHTML=`<div id="modal-tile-box" style="background: #f8f8f8;box-shadow: 3px 3px 3px dimgray;position: fixed;bottom: 0px;left:0;padding: 10px;font-size:14px; width: 200px;z-index: 999;"></div>`;
 document.getElementById('modal-tile-box').innerHTML +=`<style>
 body {font-family: Arial, Helvetica, sans-serif;}
 
@@ -336,7 +336,7 @@ width: 100%; /* Full width */
 height: 100%; /* Full height */
 overflow: auto; /* Enable scroll if needed */
 background-color: #f8f8f8; /* Fallback color */
-background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+background-color:rgba(181, 255, 200, 0.31);
 }
 
 div#leftTile {
@@ -398,6 +398,24 @@ cursor: pointer;
 
 <h2>Tiles Counter</h2>
 
+<h3>Tile Search</h3>
+<ul>
+   <li> C for City</li>
+   <li> R for Road</li>
+   <li> F for Field</li>
+   <li> W for Water (river expansion)</li>
+   <li> ? for any feature</li>
+</ul>
+<p>For example, searching for "FFWF" will match the first tile displayed below.</p>
+
+<p>Note that the sequence must be created by going around the tile in a clockwise direction.</p>
+
+
+
+<input id="inputSearch" type=text maxlength=4  placeholder="Try typing CCRC">
+<hr>
+<div id="searchResult">no results yet..</div>
+</div>
 
 <br>
 
@@ -424,24 +442,7 @@ box-shadow: 5px 5px green;">Count Tiles </button>
 <div class="modal-content" >
 
 <div style="display:block">
-<h3>Tile Search</h3>
-<ul>
-   <li> C for City</li>
-   <li> R for Road</li>
-   <li> F for Field</li>
-   <li> W for Water (river expansion)</li>
-   <li> ? for any feature</li>
-</ul>
-<p>For example, searching for "FFWF" will match the first tile displayed below.</p>
 
-<p>Note that the sequence must be created by going around the tile in a clockwise direction.</p>
-
-
-
-<input id="inputSearch" type=text maxlength=4  placeholder="Try typing CCRC">
-<hr>
-<div id="searchResult">no results yet..</div>
-</div>
 
 
 <h2>Tiles Left Counter</h2>
@@ -515,7 +516,8 @@ const box2 = document.getElementById('allTile');
 btn.onclick = function(){
     document.getElementById('fullscreen').click();
     document.getElementById('zoomout').click();
-
+    document.getElementById('zoomout').click();
+    document.getElementById('zoomout').click();
 
     modal.style.display = "block";
     btn2.style.display = 'block';//hide
@@ -628,28 +630,17 @@ function statisticsTile(){
     formatted = (totalMatched / remaningTiles * 100).toFixed(2);
 
     // return md`search: **${totalMatched}** matche(s). You have a **${formatted}** chance of drawing a tile with edges  *"${edges.reduce((acc, v) => `${acc}, ${v}`)}"*`;
-    document.getElementById("searchResult").innerHTML= String(totalMatched )+ 'matche(s). You have a ' +String(formatted )+' %chance of drawing a tile with edges  '+String(edges.reduce((acc, v) => `${acc}, ${v}`));
+    document.getElementById("searchResult").innerHTML= '<b>'+String(totalMatched )+ ' matche(s).</b> You have a <b>' +String(formatted )+'% </b> chance of drawing a tile with edges <b> '+String(edges.reduce((acc, v) => `${acc}, ${v}</b>`));
 
     printTiles();
 };
 
-
-
-
 modal.style.display = "none";
 
-
-
-//statics
-
-
-
-
-
-
-
-
-
+document.getElementById('fullscreen').click();
+document.getElementById('zoomout').click();
+document.getElementById('zoomout').click();
+document.getElementById('zoomout').click();
 
 console.log("END USER SCRIPT")
 
