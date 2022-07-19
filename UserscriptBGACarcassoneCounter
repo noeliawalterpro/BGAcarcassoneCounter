@@ -2,7 +2,7 @@
 // @name BGA OPEN LEFT TILES INNS
 // @description  BGA Carcassone Counter of Tiles
 // @author       Noelia Walter
-// @version      0.9.3
+// @version      0.9.4
 // @match https://boardgamearena.com/*
 // @updateURL    https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
 // @downloadURL  https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
@@ -36,6 +36,14 @@ function isItemInArray(array, item) {
         }
     }
     return false; // Not found
+};
+function openTab(tab) {
+    var i;
+    var x = document.getElementsByClassName("tab");
+    for (i = 0; i < x.length; i++) {
+        x[i].style.display = "none";
+    }
+    document.getElementById(tab).style.display = "block";
 };
 
 function counterTile() {
@@ -124,7 +132,10 @@ function counterTile() {
     var remaningTiles = leftTiles.reduce((acc, tile) => tile + acc, 0);
 
 
-    var htmlTiles=""
+    var htmlTiles_base="";
+    var htmlTiles_river="";
+    var htmlTiles_inns="";
+
     var borderShadow;
     var borderColor;
 
@@ -136,50 +147,79 @@ function counterTile() {
         borderShadow = leftTiles[i] > 0 ? 'rgba(0,0,0,0.19)': '0' ;
         borderColor = leftTiles[i] < qtyTiles[i] ? 'black' : 'white';
         borderColor = leftTiles[i] < qtyTiles[i] ? 'red' : 'white';
-        //if (leftTiles[i] != 0){
-        htmlTiles +='<div style="opacity:'+String(opacity)+'; border:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
-        htmlTiles +='<div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
-        htmlTiles +='</div>'
-        //}
+        if(String(selectedTiles[i].set)=="BASE"){
+            htmlTiles_base +='<div style="opacity:'+String(opacity)+'; border:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
+            htmlTiles_base +='<div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
+            htmlTiles_base +='</div>'
+        }
+        if(String(selectedTiles[i].set)=="INNS"){
+            htmlTiles_inns +='<div style="opacity:'+String(opacity)+'; border:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
+            htmlTiles_inns +='<div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
+            htmlTiles_inns +='</div>'
+        }
+        if(String(selectedTiles[i].set)=="RIVER"){
+            htmlTiles_river +='<div style="opacity:'+String(opacity)+'; border:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
+            htmlTiles_river +='<div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
+            htmlTiles_river +='</div>'
+        }
+
+
+
 
     }
 
 
-    var htmlUsedTiles="";
+    var htmlUsedTiles_base="";
+    var htmlUsedTiles_inns="";
+    var htmlUsedTiles_river="";
+
     for ( i = 0; i <leftTiles.length; i++ ) {
         opacity = leftTiles[i] === 0 ? '0.4' : '1';
         borderColor = leftTiles[i] === 0 ? '#CCC' : 'white';
         borderShadow = leftTiles[i] > 0 ? 'rgba(0,0,0,0.19)': '0' ;
         borderColor = leftTiles[i] < qtyTiles[i] ? 'red' : 'white';
         if (leftTiles[i] > 0){
-            htmlUsedTiles +='<div style="opacity:'+String('1')+'; border:4px solid ' +String( borderColor)+';transform: scale(0.75);  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex;  align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
-            htmlUsedTiles +='  <div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
-            htmlUsedTiles +='</div>'
+            if(String(selectedTiles[i].set)=="BASE"){
+                htmlUsedTiles_base +='<div style="opacity:'+String(opacity)+'; border:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
+                htmlUsedTiles_base +='<div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
+                htmlUsedTiles_base +='</div>'
+            }
+            if(String(selectedTiles[i].set)=="INNS"){
+                htmlUsedTiles_inns +='<div style="opacity:'+String(opacity)+'; border:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
+                htmlUsedTiles_inns +='<div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
+                htmlUsedTiles_inns +='</div>'
+            }
+            if(String(selectedTiles[i].set)=="RIVER"){
+                htmlUsedTiles_river +='<div style="opacity:'+String(opacity)+'; border:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
+                htmlUsedTiles_river +='<div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
+                htmlUsedTiles_river +='</div>'
+            }
         }
 
     }
 
-    document.getElementById('leftTile').innerHTML=htmlUsedTiles;
+  
 
+    document.getElementById('tiles-remain').innerHTML ='<div><li>RemaingTiles '+ String(remaningTiles)+' </li></div>';
 
-    document.getElementById('myModalTiles').innerHTML ='<div><li>RemaingTiles '+ String(remaningTiles)+' </li></div>';
+    document.getElementById('base-tab').innerHTML ='<h2>Base</h2><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;">'+htmlTiles_base+'</div>';
+    document.getElementById('base-left').innerHTML='<h2>River</h2><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr ;">'+htmlUsedTiles_base+'</div>';
 
-    document.getElementById('myModalTiles').innerHTML +='<div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;">'+htmlTiles+'</div>';
+    if(innsSet==true){
+        document.getElementById('inns-tab').innerHTML ='<h2>Inns</h2><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;">'+htmlTiles_inns+'</div>';
+        document.getElementById('inns-left').innerHTML='<h2>River</h2><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr ;">'+htmlUsedTiles_inns+'</div>';
+    }
+    if(riverSet==true){
+        document.getElementById('river-tab').innerHTML ='<h2>River</h2><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;">'+htmlTiles_river+'</div>';
+        document.getElementById('river-left').innerHTML='<h2>River</h2><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr ;">'+htmlUsedTiles_river+'</div>';
+    }
 
     /// END on the of the turn
 }
 
 
-
-
-
-
-
-
-
-
 document.getElementById(idTile).innerHTML=document.getElementById(idTile).innerHTML+=`
-<div id="modal-tile-box" style="background: #f8f8f8;position: absolute;top: 122px;left: -85vw;padding: 10px;width: 300px;"></div>`;
+<div id="modal-tile-box" style="background: #f8f8f8;position: absolute;top: 122px;left: -85vw;padding: 10px;width: 380px;"></div>`;
 document.getElementById('modal-tile-box').innerHTML +=`<style>
 body {font-family: Arial, Helvetica, sans-serif;}
 
@@ -292,8 +332,13 @@ background: blue;
 font-size: 20px;
 box-shadow: 5px 5px green;">Show Left Tiles<span id="arrowtop">  </button>
 
-<div id="leftTile"></div>
+<div id="leftTile">
 
+<div id="river-left" class="w3-container tab"></div>
+<div id="base-left" class="w3-container tab" ></div>
+<div id="inns-left" class="w3-container tab" ></div>
+
+</div>
 
 <!-- The Modal -->
 <div id="myModal" class="modal">
@@ -302,7 +347,17 @@ box-shadow: 5px 5px green;">Show Left Tiles<span id="arrowtop">  </button>
 <div class="modal-content" >
 <h2>Tiles Left Counter</h2>
 <span class="close">&times;</span>
-<div id="myModalTiles"></div>
+<div id="myModalTiles" >
+<div id="tiles-remain"></div>
+
+
+<div id="river-tab" class="w3-container tab"></div>
+
+<div id="base-tab" class="w3-container tab" ></div>
+
+<div id="inns-tab" class="w3-container tab" ></div>
+
+</div>
 
 </div>
 
@@ -324,13 +379,12 @@ const box = document.getElementById('leftTile');
 btn.onclick = function(){
     modal.style.display = "block";
     btn2.style.display = 'block';
-    box.style.display= 'grid';
+    box.style.display= 'block';
     counterTile();
 
 
 
 }
-document.getElementById('leftTile').innerHTML=htmlUsedTiles;
 
 const btn2 = document.getElementById('myBtn2');
 const btn3 = document.getElementById('myBtn3');
