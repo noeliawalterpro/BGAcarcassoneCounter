@@ -2,7 +2,7 @@
 // @name BGA OPEN LEFT TILES INNS
 // @description  BGA Carcassone Counter of Tiles
 // @author       Noelia Walter
-// @version      0.9.2
+// @version      0.9.3
 // @match https://boardgamearena.com/*
 // @updateURL    https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
 // @downloadURL  https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
@@ -23,8 +23,8 @@ var innsAndCathedrals=document.getElementById('menu_option_value_103').innerHTML
 var builders=document.getElementById('menu_option_value_104').innerHTML;
 var htmlUsedTiles="";
 var baseSet =true;
-var innsSet=innsAndCathedrals=="Sí";
-var riverSet=river=="Sí";
+var innsSet=innsAndCathedrals=="Sí"||innsAndCathedrals=="Yes";
+var riverSet=river=="Sí"||river=="Yes";
 
 function isItemInArray(array, item) {
     for (var i = 0; i < array.length; i++) {
@@ -62,31 +62,42 @@ function counterTile() {
     var Bga_TileArt;
 
     var state2;
+
+    console.log("expansions");
+    var Bga_base=[[1],[3,2],[6,5,4],[8,7],[11,10,9],[13,12],[14],[16,15],[18,17],[21,20,19],[26,25,24,23,22],[29,28,27],[32,31,30],[35,34,33],[39,38,37,36],[47,46,45,44,43,42,41,40],[56,55,54,53,52,51,50,49,48],[60,59,58,57],[61],[65,64,63,62],[67,66],[68],[71,70,69],[72]];
+    var Bga_inns=[[73],[74],[75],[76],[77],[78],[79],[80],[81,82],[83],[84],[85],[89],[90]]
+    var Bga_river=[[115],[116,117],[118],[119],[120,121],[122],[123],[124],[125],[126]];
+
+    var qty_base=[1,2,3,2,3,2,1,2,2,3,5,3,3,3,4,8,9,4,1,4,2,1,3,1];
+    var qty_inns=[ 1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1];
+    var qty_river=[1,2,1,1,2,1,1,1,1,1];
+    Bga_TileArt=[];
+    qtyTiles=[];
+    state2=[];
+
+    Bga_TileArt=Bga_TileArt.concat(Bga_base);
+    qtyTiles=qtyTiles.concat(qty_base);
+    state2=state2.concat(qty_base);
     if(innsSet==true){
+        Bga_TileArt=Bga_TileArt.concat(Bga_inns);
+        qtyTiles=qtyTiles.concat(qty_inns);
+        state2=state2.concat(qty_inns);
+    }
+    if(riverSet==true){
+        Bga_TileArt=Bga_TileArt.concat(Bga_river);
+        qtyTiles=qtyTiles.concat(qty_river);
+        state2=state2.concat(qty_river);
+    }
 
-        Bga_TileArt=[[1],[3,2],[6,5,4],[8,7],[11,10,9],[13,12],[14],[16,15],[18,17],[21,20,19],[26,25,24,23,22],[29,28,27],[32,31,30],[35,34,33],[39,38,37,36],[47,46,45,44,43,42,41,40],[56,55,54,53,52,51,50,49,48],[60,59,58,57],[61],[65,64,63,62],[67,66],[68],[71,70,69],[72],
-                     [73],[74],[75],[76],[77],[78],[79],[80],[81,82],[83],[84],[85],[89],[90]];
 
-        qtyTiles=[1,2,3,2,3,2,1,2,2,3,5,3,3,3,4,8,9,4,1,4,2,1,3,1,
-                  1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1];
+    var allTiles=[{"set":"BASE","id":0,"qty":1,"tags":["road","road end","city"],"edges":["C","C","R","C"]},{"set":"BASE","id":1,"qty":2,"tags":["road","road end","city","shield"],"edges":["C","C","R","C"]},{"set":"BASE","id":2,"qty":3,"tags":["city","doritos"],"edges":["C","F","F","C"]},{"set":"BASE","id":3,"qty":2,"tags":["city","doritos","shield"],"edges":["C","F","F","C"]},{"set":"BASE","id":4,"qty":3,"tags":["city","doritos","road","curve"],"edges":["C","R","R","C"]},{"set":"BASE","id":5,"qty":2,"tags":["city","doritos","road","curve","shield"],"edges":["C","R","R","C"]},{"set":"BASE","id":6,"qty":1,"tags":["city","join"],"edges":["F","C","F","C"]},{"set":"BASE","id":7,"qty":2,"tags":["city","join","shield"],"edges":["F","C","F","C"]},{"set":"BASE","id":8,"qty":2,"tags":["city","top"],"edges":["C","F","F","C"]},{"set":"BASE","id":9,"qty":3,"tags":["city","top"],"edges":["C","F","C","F"]},{"set":"BASE","id":10,"qty":5,"tags":["city","top"],"edges":["C","F","F","F"]},{"set":"BASE","id":11,"qty":3,"tags":["city","top","road","curve","left"],"edges":["C","F","R","R"]},{"set":"BASE","id":12,"qty":3,"tags":["city","top","road","curve","right"],"edges":["C","R","R","F"]},{"set":"BASE","id":13,"qty":3,"tags":["city","top","road","road end"],"edges":["C","R","R","R"]},{"set":"BASE","id":14,"qty":4,"tags":["city","top","road","straight"],"edges":["C","R","F","R"]},{"set":"BASE","id":15,"qty":8,"tags":["road","straight"],"edges":["R","F","R","F"]},{"set":"BASE","id":16,"qty":9,"tags":["road","curve"],"edges":["F","F","R","R"]},{"set":"BASE","id":17,"qty":4,"tags":["road","road end"],"edges":["F","R","R","R"]},{"set":"BASE","id":18,"qty":1,"tags":["road","road end"],"edges":["R","R","R","R"]},{"set":"BASE","id":19,"qty":4,"tags":["monastery"],"edges":["F","F","F","F"]},{"set":"BASE","id":20,"qty":2,"tags":["monastery","road","road end"],"edges":["F","F","R","F"]},{"set":"BASE","id":21,"qty":1,"tags":["city","shield"],"edges":["C","C","C","C"]},{"set":"BASE","id":22,"qty":3,"tags":["city"],"edges":["C","C","F","C"]},{"set":"BASE","id":23,"qty":1,"tags":["city","shield"],"edges":["C","C","F","C"]},
+                  {"set":"RIVER","id":65,"qty":1,"tags":["river"],"edges":["F","F","W","F"]},{"set":"RIVER","id":66,"qty":2,"tags":["river"],"edges":["F","W","W","F"]},{"set":"RIVER","id":67,"qty":1,"tags":["river","road","monastery"],"edges":["F","W","R","W"]},{"set":"RIVER","id":68,"qty":1,"tags":["river","road"],"edges":["R","R","W","W"]},{"set":"RIVER","id":69,"qty":2,"tags":["river"],"edges":["W","F","W","F"]},{"set":"RIVER","id":70,"qty":1,"tags":["river"],"edges":["W","F","F","F"]},{"set":"RIVER","id":71,"qty":1,"tags":["river","road","city"],"edges":["W","C","W","R"]},{"set":"RIVER","id":72,"qty":1,"tags":["river","city"],"edges":["C","W","C","W"]},{"set":"RIVER","id":73,"qty":1,"tags":["river","road"],"edges":["R","W","W","R"]},{"set":"RIVER","id":74,"qty":1,"tags":["river","city"],"edges":["W","C","C","W"]},
+                  {"set":"INNS","id":24,"qty":1,"tags":["road","curve","inn"],"edges":["F","F","R","R"]},{"set":"INNS","id":25,"qty":1,"tags":["city","road"],"edges":["C","F","R","F"]},{"set":"INNS","id":26,"qty":1,"tags":["road","city","road end","shield"],"edges":["F","F","R","R"]},{"set":"INNS","id":27,"qty":1,"tags":["road","monastery"],"edges":["F","R","F","R"]},{"set":"INNS","id":28,"qty":1,"tags":["road","curve"],"edges":["R","R","R","R"]},{"set":"INNS","id":29,"qty":1,"tags":["city","road","road end"],"edges":["C","R","F","C"]},{"set":"INNS","id":30,"qty":1,"tags":["city"],"edges":["F","C","F","F"]},{"set":"INNS","id":31,"qty":1,"tags":["city"],"edges":["C","C","C","C"]},{"set":"INNS","id":32,"qty":2,"tags":["city","cathedral"],"edges":["C","C","C","C"]},{"set":"INNS","id":33,"qty":1,"tags":["road","straight","inn"],"edges":["F","R","F","R"]},{"set":"INNS","id":34,"qty":1,"tags":["road","road end","inn"],"edges":["F","R","R","R"]},{"set":"INNS","id":35,"qty":1,"tags":["city","road","shield","inn"],"edges":["C","R","R","C"]},{"set":"INNS","id":36,"qty":1,"tags":["city","road","inn"],"edges":["C","F","R","R"]},{"set":"INNS","id":37,"qty":1,"tags":["city","road","road end","inn"],"edges":["C","F","R","C"]},{"set":"INNS","id":38,"qty":1,"tags":["city","shield"],"edges":["C","F","C","C"]},{"set":"INNS","id":39,"qty":1,"tags":["city"],"edges":["C","F","C","C"]},{"set":"INNS","id":40,"qty":1,"tags":["city","road","straight"],"edges":["R","C","R","C"]}];
+    selectedTiles = allTiles.filter((tile) => {
+        return (baseSet === true && tile.set === "BASE" || riverSet === true && tile.set === "RIVER" || innsSet === true && tile.set === "INNS") });
+    console.log(selectedTiles);
 
 
-
-        var allTiles=[{"set":"BASE","id":0,"qty":1,"tags":["road","road end","city"],"edges":["C","C","R","C"]},{"set":"BASE","id":1,"qty":2,"tags":["road","road end","city","shield"],"edges":["C","C","R","C"]},{"set":"BASE","id":2,"qty":3,"tags":["city","doritos"],"edges":["C","F","F","C"]},{"set":"BASE","id":3,"qty":2,"tags":["city","doritos","shield"],"edges":["C","F","F","C"]},{"set":"BASE","id":4,"qty":3,"tags":["city","doritos","road","curve"],"edges":["C","R","R","C"]},{"set":"BASE","id":5,"qty":2,"tags":["city","doritos","road","curve","shield"],"edges":["C","R","R","C"]},{"set":"BASE","id":6,"qty":1,"tags":["city","join"],"edges":["F","C","F","C"]},{"set":"BASE","id":7,"qty":2,"tags":["city","join","shield"],"edges":["F","C","F","C"]},{"set":"BASE","id":8,"qty":2,"tags":["city","top"],"edges":["C","F","F","C"]},{"set":"BASE","id":9,"qty":3,"tags":["city","top"],"edges":["C","F","C","F"]},{"set":"BASE","id":10,"qty":5,"tags":["city","top"],"edges":["C","F","F","F"]},{"set":"BASE","id":11,"qty":3,"tags":["city","top","road","curve","left"],"edges":["C","F","R","R"]},{"set":"BASE","id":12,"qty":3,"tags":["city","top","road","curve","right"],"edges":["C","R","R","F"]},{"set":"BASE","id":13,"qty":3,"tags":["city","top","road","road end"],"edges":["C","R","R","R"]},{"set":"BASE","id":14,"qty":4,"tags":["city","top","road","straight"],"edges":["C","R","F","R"]},{"set":"BASE","id":15,"qty":8,"tags":["road","straight"],"edges":["R","F","R","F"]},{"set":"BASE","id":16,"qty":9,"tags":["road","curve"],"edges":["F","F","R","R"]},{"set":"BASE","id":17,"qty":4,"tags":["road","road end"],"edges":["F","R","R","R"]},{"set":"BASE","id":18,"qty":1,"tags":["road","road end"],"edges":["R","R","R","R"]},{"set":"BASE","id":19,"qty":4,"tags":["monastery"],"edges":["F","F","F","F"]},{"set":"BASE","id":20,"qty":2,"tags":["monastery","road","road end"],"edges":["F","F","R","F"]},{"set":"BASE","id":21,"qty":1,"tags":["city","shield"],"edges":["C","C","C","C"]},{"set":"BASE","id":22,"qty":3,"tags":["city"],"edges":["C","C","F","C"]},{"set":"BASE","id":23,"qty":1,"tags":["city","shield"],"edges":["C","C","F","C"]},{"set":"RIVER","id":65,"qty":1,"tags":["river"],"edges":["F","F","W","F"]},{"set":"RIVER","id":66,"qty":2,"tags":["river"],"edges":["F","W","W","F"]},{"set":"RIVER","id":67,"qty":1,"tags":["river","road","monastery"],"edges":["F","W","R","W"]},{"set":"RIVER","id":68,"qty":1,"tags":["river","road"],"edges":["R","R","W","W"]},{"set":"RIVER","id":69,"qty":2,"tags":["river"],"edges":["W","F","W","F"]},{"set":"RIVER","id":70,"qty":1,"tags":["river"],"edges":["W","F","F","F"]},{"set":"RIVER","id":71,"qty":1,"tags":["river","road","city"],"edges":["W","C","W","R"]},{"set":"RIVER","id":72,"qty":1,"tags":["river","city"],"edges":["C","W","C","W"]},{"set":"RIVER","id":73,"qty":1,"tags":["river","road"],"edges":["R","W","W","R"]},{"set":"RIVER","id":74,"qty":1,"tags":["river","city"],"edges":["W","C","C","W"]},{"set":"INNS","id":24,"qty":1,"tags":["road","curve","inn"],"edges":["F","F","R","R"]},{"set":"INNS","id":25,"qty":1,"tags":["city","road"],"edges":["C","F","R","F"]},{"set":"INNS","id":26,"qty":1,"tags":["road","city","road end","shield"],"edges":["F","F","R","R"]},{"set":"INNS","id":27,"qty":1,"tags":["road","monastery"],"edges":["F","R","F","R"]},{"set":"INNS","id":28,"qty":1,"tags":["road","curve"],"edges":["R","R","R","R"]},{"set":"INNS","id":29,"qty":1,"tags":["city","road","road end"],"edges":["C","R","F","C"]},{"set":"INNS","id":30,"qty":1,"tags":["city"],"edges":["F","C","F","F"]},{"set":"INNS","id":31,"qty":1,"tags":["city"],"edges":["C","C","C","C"]},{"set":"INNS","id":32,"qty":2,"tags":["city","cathedral"],"edges":["C","C","C","C"]},{"set":"INNS","id":33,"qty":1,"tags":["road","straight","inn"],"edges":["F","R","F","R"]},{"set":"INNS","id":34,"qty":1,"tags":["road","road end","inn"],"edges":["F","R","R","R"]},{"set":"INNS","id":35,"qty":1,"tags":["city","road","shield","inn"],"edges":["C","R","R","C"]},{"set":"INNS","id":36,"qty":1,"tags":["city","road","inn"],"edges":["C","F","R","R"]},{"set":"INNS","id":37,"qty":1,"tags":["city","road","road end","inn"],"edges":["C","F","R","C"]},{"set":"INNS","id":38,"qty":1,"tags":["city","shield"],"edges":["C","F","C","C"]},{"set":"INNS","id":39,"qty":1,"tags":["city"],"edges":["C","F","C","C"]},{"set":"INNS","id":40,"qty":1,"tags":["city","road","straight"],"edges":["R","C","R","C"]}];
-        selectedTiles = allTiles.filter((tile) => {
-            return (baseSet === true && tile.set === "BASE" || riverSet === true && tile.set === "RIVER" || innsSet === true && tile.set === "INNS") });
-        console.log(selectedTiles);
-        state2=[1,2,3,2,3,2,1,2,2,3,5,3,3,3,4,8,9,4,1,4,2,1,3,1,
-                1,1,1,1,1,1,1,1,2,1,1,1,1,1,1,1,1];
-
-    }else{
-        selectedTiles=[{"set":"BASE","id":0,"qty":1,"tags":["road","road end","city"],"edges":["C","C","R","C"]},{"set":"BASE","id":1,"qty":2,"tags":["road","road end","city","shield"],"edges":["C","C","R","C"]},{"set":"BASE","id":2,"qty":3,"tags":["city","doritos"],"edges":["C","F","F","C"]},{"set":"BASE","id":3,"qty":2,"tags":["city","doritos","shield"],"edges":["C","F","F","C"]},{"set":"BASE","id":4,"qty":3,"tags":["city","doritos","road","curve"],"edges":["C","R","R","C"]},{"set":"BASE","id":5,"qty":2,"tags":["city","doritos","road","curve","shield"],"edges":["C","R","R","C"]},{"set":"BASE","id":6,"qty":1,"tags":["city","join"],"edges":["F","C","F","C"]},{"set":"BASE","id":7,"qty":2,"tags":["city","join","shield"],"edges":["F","C","F","C"]},{"set":"BASE","id":8,"qty":2,"tags":["city","top"],"edges":["C","F","F","C"]},{"set":"BASE","id":9,"qty":3,"tags":["city","top"],"edges":["C","F","C","F"]},{"set":"BASE","id":10,"qty":5,"tags":["city","top"],"edges":["C","F","F","F"]},{"set":"BASE","id":11,"qty":3,"tags":["city","top","road","curve","left"],"edges":["C","F","R","R"]},{"set":"BASE","id":12,"qty":3,"tags":["city","top","road","curve","right"],"edges":["C","R","R","F"]},{"set":"BASE","id":13,"qty":3,"tags":["city","top","road","road end"],"edges":["C","R","R","R"]},{"set":"BASE","id":14,"qty":4,"tags":["city","top","road","straight"],"edges":["C","R","F","R"]},{"set":"BASE","id":15,"qty":8,"tags":["road","straight"],"edges":["R","F","R","F"]},{"set":"BASE","id":16,"qty":9,"tags":["road","curve"],"edges":["F","F","R","R"]},{"set":"BASE","id":17,"qty":4,"tags":["road","road end"],"edges":["F","R","R","R"]},{"set":"BASE","id":18,"qty":1,"tags":["road","road end"],"edges":["R","R","R","R"]},{"set":"BASE","id":19,"qty":4,"tags":["monastery"],"edges":["F","F","F","F"]},{"set":"BASE","id":20,"qty":2,"tags":["monastery","road","road end"],"edges":["F","F","R","F"]},{"set":"BASE","id":21,"qty":1,"tags":["city","shield"],"edges":["C","C","C","C"]},{"set":"BASE","id":22,"qty":3,"tags":["city"],"edges":["C","C","F","C"]},{"set":"BASE","id":23,"qty":1,"tags":["city","shield"],"edges":["C","C","F","C"]}];
-
-        Bga_TileArt=[[1],[3,2],[6,5,4],[8,7],[11,10,9],[13,12],[14],[16,15],[18,17],[21,20,19],[26,25,24,23,22],[29,28,27],[32,31,30],[35,34,33],[39,38,37,36],[47,46,45,44,43,42,41,40],[56,55,54,53,52,51,50,49,48],[60,59,58,57],[61],[65,64,63,62],[67,66],[68],[71,70,69],[72]]
-        state2=[1,2,3,2,3,2,1,2,2,3,5,3,3,3,4,8,9,4,1,4,2,1,3,1];
-        qtyTiles=[1,2,3,2,3,2,1,2,2,3,5,3,3,3,4,8,9,4,1,4,2,1,3,1];
-
-    };
 
 
 
