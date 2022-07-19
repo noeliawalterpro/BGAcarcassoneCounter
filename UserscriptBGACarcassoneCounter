@@ -2,7 +2,7 @@
 // @name BGA OPEN LEFT TILES INNS
 // @description  BGA Carcassone Counter of Tiles
 // @author       Noelia Walter
-// @version      0.9.10
+// @version      0.9.3
 // @match https://boardgamearena.com/*
 // @updateURL    https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
 // @downloadURL  https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
@@ -34,12 +34,14 @@ var selectedTiles;
 var qtyTiles;
 var Bga_TileArt;
 var state2;
-
+var highLight;
+var useTiles;
+var leftTiles
 //statics
 
 var edgeSearch;
 var edges;
-var matches;
+var matches=[];
 var possibleRotations;
 var totalMatched;
 var formatted;
@@ -66,18 +68,10 @@ function isItemInArray(array, item) {
     }
     return false; // Not found
 };
-function openTab(tab) {
-    var i;
-    var x = document.getElementsByClassName("tab");
-    for (i = 0; i < x.length; i++) {
-        x[i].style.display = "none";
-    }
-    document.getElementById(tab).style.display = "block";
-};
 
 
 function useTilef(bgaGAME){
-     var x = [];
+    var x = [];
     var i;
     for ( i = 0; i <bgaGAME.length; i++ ) {
 
@@ -91,7 +85,7 @@ function useTilef(bgaGAME){
 
 
 function counterTile() {
-
+    var i;
     /// on the of the turn
     i = 0;
     var text = "";
@@ -101,7 +95,7 @@ function counterTile() {
         text +=" , "+ document.getElementsByClassName('tile_art')[i].id ;
         i++;
 
-    } text
+    };
 
     var mybrr = [text];
     var filtered = mybrr[0].replace(/\D+/g, ' ').trim().split(' ').map(e => parseInt(e));
@@ -142,22 +136,23 @@ function counterTile() {
     console.log(selectedTiles);
 
     //FUNCTIONS
-   
-    var i;
 
-   
-    var useTiles=useTilef(bgaGAME);
 
-    var leftTiles=state2;
+
+
+    useTiles=useTilef(bgaGAME);
+
+    leftTiles=state2;
     for ( i = 0; i <useTiles.length; i++ ) {
         var j=useTiles[i];
         var a=leftTiles[j]- 1;
         leftTiles[j]=a;
     };
     leftTiles;
-
+}
+function printTiles(){
     remaningTiles = leftTiles.reduce((acc, tile) => tile + acc, 0);
-
+    var i;
 
     var htmlTiles_base="";
     var htmlTiles_river="";
@@ -195,10 +190,14 @@ function counterTile() {
     var htmlUsedTiles_base="";
     var htmlUsedTiles_inns="";
     var htmlUsedTiles_river="";
-
+    console.log(matches);
     for ( i = 0; i <leftTiles.length; i++ ) {
         opacity = leftTiles[i] === 0 ? '0.4' : '1';
-        borderColor = leftTiles[i] === 0 ? '#CCC' : 'white';
+
+        highLight = matches.indexOf(selectedTiles[i].id) >= 0 ? '#333' : '#FFF';
+
+        borderColor = leftTiles[i] === 0 ? '#CCC' : highLight;
+
         borderShadow = leftTiles[i] > 0 ? 'rgba(0,0,0,0.19)': '0' ;
         borderColor = leftTiles[i] < qtyTiles[i] ? 'red' : 'white';
         if (leftTiles[i] > 0){
@@ -274,7 +273,7 @@ margin: auto;
 padding: 20px;
 border: 1px solid #888;
  width: 380px;
-height:80vh;
+max-height:80vh;
 overflow-y: auto;
 position:absolute;
 left:0px;
@@ -319,23 +318,6 @@ cursor: pointer;
 <body>
 
 <h2>Tiles Counter</h2>
-<div style="display:none">
-<h3>Tile Search</h3>
-<ul>
-   <li> C for City</li>
-   <li> R for Road</li>
-   <li> F for Field</li>
-   <li> W for Water (river expansion)</li>
-   <li> ? for any feature</li>
-</ul>
-<p>For example, searching for "FFWF" will match the first tile displayed below.</p>
-
-<p>Note that the sequence must be created by going around the tile in a clockwise direction.</p>
-
-<input id="inputSearch" oninput="typeEdges()" maxlength=4 type=text placeholder="Try typing CCRC">
-<br>
-<div id="searchResult">no results yet..</div>
-</div>
 
 
 
@@ -362,6 +344,28 @@ box-shadow: 5px 5px green;">Count Tiles </button>
 
 <!-- Modal content -->
 <div class="modal-content" >
+
+<div style="display:block">
+<h3>Tile Search</h3>
+<ul>
+   <li> C for City</li>
+   <li> R for Road</li>
+   <li> F for Field</li>
+   <li> W for Water (river expansion)</li>
+   <li> ? for any feature</li>
+</ul>
+<p>For example, searching for "FFWF" will match the first tile displayed below.</p>
+
+<p>Note that the sequence must be created by going around the tile in a clockwise direction.</p>
+
+
+
+<input id="inputSearch" type=text maxlength=4  placeholder="Try typing CCRC">
+<br>
+<div id="searchResult">no results yet..</div>
+</div>
+
+
 <h2>Tiles Left Counter</h2>
 <span class="close">&times;</span>
 <div id="myModalTiles" >
@@ -426,14 +430,19 @@ const box2 = document.getElementById('allTile');
 // When the user clicks the button, open the modal
 btn.onclick = function(){
     document.getElementById('fullscreen').click();
+    document.getElementById('zoomout').click();
+
+
     modal.style.display = "block";
     btn2.style.display = 'block';//hide
     btn3.style.display = 'none';//show
     box.style.display= 'block';
     box2.style.display= 'none';
+
+
     counterTile();
 
-
+    printTiles();
 
 };
 
@@ -477,19 +486,13 @@ window.onclick = function(event) {
 };
 
 
-function typeEdges(){
-   console.log(document.getElementById("inputSearch").value);
-  //  counterTile();
-   statisticsTile();
-};
-
 var getTileIndexById= function(id) { return selectedTiles.findIndex(t => t.id === id)};
 
 var setMatches= function(matches) {
-   searchMatches.value = matches;
+    searchMatches.value = matches;
 };
 
-var searchMatches= function(element) {
+function searchMatches(element) {
 
     element.value = [];
     return element;
@@ -505,16 +508,22 @@ var edgeRotations= function([top = wildcard , right = wildcard , bottom = wildca
 };
 
 
+const input = document.getElementById('inputSearch');
 
- function statisticsTile(){
 
+input.addEventListener('input',statisticsTile);
+
+
+function statisticsTile(){
+    counterTile();
     edgeSearch = document.getElementById("inputSearch").value;
     edges = edgeSearch.split('').map(l => l.toUpperCase());
     if(edges.length === 0) {
-        window.setMatches([]);
+        setMatches([]);
         document.getElementById("searchResult").innerHTML='No search results';;
     };
     possibleRotations = edgeRotations(edges);
+
     matches = selectedTiles.filter(tile => {
         const [t, r, b, l] = tile.edges;
         return possibleRotations.filter(([r1, r2, r3, r4]) => {
@@ -526,7 +535,7 @@ var edgeRotations= function([top = wildcard , right = wildcard , bottom = wildca
             );
         }).length > 0;
     }).map(t => t.id);
-   setMatches(matches);
+    setMatches(matches);
     totalMatched = matches.reduce((acc, id) => state2[getTileIndexById(id)] + acc, 0);
     if(totalMatched === 0) {
         setMatches([]);
@@ -536,11 +545,13 @@ var edgeRotations= function([top = wildcard , right = wildcard , bottom = wildca
 
     // return md`search: **${totalMatched}** matche(s). You have a **${formatted}** chance of drawing a tile with edges  *"${edges.reduce((acc, v) => `${acc}, ${v}`)}"*`;
     document.getElementById("searchResult").innerHTML= String(totalMatched )+ 'matche(s). You have a ' +String(formatted )+' %chance of drawing a tile with edges  '+String(edges.reduce((acc, v) => `${acc}, ${v}`));
+
+    printTiles();
 };
 
-debugger;
 
-counterTile();
+
+
 modal.style.display = "none";
 
 
