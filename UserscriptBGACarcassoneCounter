@@ -2,7 +2,7 @@
 // @name BGA OPEN LEFT TILES INNS
 // @description  BGA Carcassone Counter of Tiles
 // @author       Noelia Walter
-// @version      1.0
+// @version      1.0.1
 // @match https://boardgamearena.com/*
 // @updateURL    https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
 // @downloadURL  https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
@@ -298,7 +298,7 @@ function printTiles(){
 
 
 
-    document.getElementById('tiles-remain').innerHTML ='<div><li>RemaingTiles '+ String(remaningTiles)+' </li></div>';
+    document.getElementById('tiles-remain').innerHTML ='<div><h3>RemaingTiles '+ String(remaningTiles)+' </h3></div>';
 
     document.getElementById('base-tab').innerHTML ='<h3>Base</h3><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr;">'+htmlTiles_base+'</div>';
     document.getElementById('base-left').innerHTML='<h3>Base</h3><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr ;">'+htmlUsedTiles_base+'</div>';
@@ -396,9 +396,6 @@ cursor: pointer;
 <body>
 
 <h2>Tiles Counter</h2>
-<div><h3>Color Code</h3><b style="color:blue"> - Search Tiles</b>
-<br>
-<b style="color:red"> - At least one Tile Use</b> </div>
 
 
 <br>
@@ -447,6 +444,12 @@ box-shadow: 5px 5px green;">Count Tiles </button>
 
 
 <h2>Tiles Left Counter</h2>
+
+<div><h3>Color Code</h3><b style="color:blue"> - Search Tiles</b>
+<br>
+<b style="color:red"> - At least one Tile Use</b> </div>
+
+
 <span class="close">&times;</span>
 <div id="myModalTiles" >
 <div id="tiles-remain"></div>
