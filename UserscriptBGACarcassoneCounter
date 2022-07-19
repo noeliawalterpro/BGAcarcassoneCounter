@@ -2,7 +2,7 @@
 // @name BGA OPEN LEFT TILES INNS
 // @description  BGA Carcassone Counter of Tiles
 // @author       Noelia Walter
-// @version      0.9.5
+// @version      0.9.7
 // @match https://boardgamearena.com/*
 // @updateURL    https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
 // @downloadURL  https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
@@ -25,6 +25,12 @@ var htmlUsedTiles="";
 var baseSet =true;
 var innsSet=innsAndCathedrals=="Sí"||innsAndCathedrals=="Yes";
 var riverSet=river=="Sí"||river=="Yes";
+
+
+const newElement = document.createElement('div')
+
+document.body.appendChild(newElement)
+
 
 function isItemInArray(array, item) {
     for (var i = 0; i < array.length; i++) {
@@ -220,8 +226,7 @@ function counterTile() {
 }
 
 
-document.getElementById(idTile).innerHTML=document.getElementById(idTile).innerHTML+=`
-<div id="modal-tile-box" style="background: #f8f8f8;position: absolute;top: 122px;left: -85vw;padding: 10px;width: 380px;"></div>`;
+newElement.innerHTML=`<div id="modal-tile-box" style="background: #f8f8f8;position: absolute;top: 122px;left:0;padding: 10px;width: 380px;z-index: 999;"></div>`;
 document.getElementById('modal-tile-box').innerHTML +=`<style>
 body {font-family: Arial, Helvetica, sans-serif;}
 
