@@ -2,7 +2,7 @@
 // @name BGA OPEN LEFT TILES INNS
 // @description  BGA Carcassone Counter of Tiles
 // @author       Noelia Walter
-// @version      1.0.1
+// @version      1.0.2
 // @match https://boardgamearena.com/*
 // @updateURL    https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
 // @downloadURL  https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
@@ -151,6 +151,7 @@ function counterTile() {
     };
     leftTiles;
 }
+
 function printTiles(){
     remaningTiles = leftTiles.reduce((acc, tile) => tile + acc, 0);
     var i;
@@ -166,7 +167,7 @@ function printTiles(){
     var opacity;
 
 
-
+    var borderColorbottom ="none";
     var htmlUsedTiles_base="";
     var htmlUsedTiles_inns="";
     var htmlUsedTiles_river="";
@@ -180,22 +181,21 @@ function printTiles(){
         for ( i = 0; i <selectedTiles.length; i++ ) {
             opacity = leftTiles[i] === 0 ? '0.4' : '1';
 
-            borderShadow = leftTiles[i] > 0 ? 'rgba(0,0,0,0.19)': '0' ;
-            if(isItemInArray( leftTiles[i] < qtyTiles[i] )==true){borderColor = 'red' }
-
+            borderShadow = leftTiles[i] > 0 ? '#d9cccc': 'transparent' ;
+            borderColorbottom = leftTiles[i] < qtyTiles[i] ? 'red' : 'white';
 
             if(String(selectedTiles[i].set)=="BASE"){
-                htmlTiles_base +='<div style="opacity:'+String(opacity)+'; border:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
+                htmlTiles_base +='<div style="opacity:'+String(opacity)+'; border-bottom:4px solid ' +String( borderColorbottom)+'; border-top:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 4px 4px' +String(borderShadow)+';">';
                 htmlTiles_base +='<div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
                 htmlTiles_base +='</div>'
             }
             if(String(selectedTiles[i].set)=="INNS"){
-                htmlTiles_inns +='<div style="opacity:'+String(opacity)+'; border:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
+                htmlTiles_inns +='<div style="opacity:'+String(opacity)+';border-bottom:4px solid ' +String( borderColorbottom)+'; border-top:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 4px 4px' +String(borderShadow)+';">';
                 htmlTiles_inns +='<div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
                 htmlTiles_inns +='</div>'
             }
             if(String(selectedTiles[i].set)=="RIVER"){
-                htmlTiles_river +='<div style="opacity:'+String(opacity)+'; border:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
+                htmlTiles_river +='<div style="opacity:'+String(opacity)+';border-bottom:4px solid ' +String( borderColorbottom)+'; border-top:4px solid ' +String( borderColor)+';   border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 4px 4px' +String(borderShadow)+';">';
                 htmlTiles_river +='<div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
                 htmlTiles_river +='</div>'
             }
@@ -203,23 +203,23 @@ function printTiles(){
         //left
         for ( i = 0; i <leftTiles.length; i++ ) {
             opacity = leftTiles[i] === 0 ? '0.4' : '1';
-            borderColor = leftTiles[i] === 0 ? '#CCC' : 'white';
-            borderShadow = leftTiles[i] > 0 ? 'rgba(0,0,0,0.19)': '0' ;
-            borderColor = leftTiles[i] < qtyTiles[i] ? 'red' : 'white';
+
+            borderShadow = leftTiles[i] > 0 ? '#d9cccc': 'transparent' ;
+            borderColorbottom = leftTiles[i] < qtyTiles[i] ? 'red' : 'white';
 
             if (leftTiles[i] > 0){
                 if(String(selectedTiles[i].set)=="BASE"){
-                    htmlUsedTiles_base +='<div style="opacity:'+String(opacity)+'; border:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
+                    htmlUsedTiles_base +='<div style="opacity:'+String(opacity)+';  border-bottom:4px solid ' +String( borderColorbottom)+'; border-top:4px solid ' +String( borderColor)+';  border-top:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 4px 4px ' +String(borderShadow)+';">';
                     htmlUsedTiles_base +='<div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
                     htmlUsedTiles_base +='</div>'
                 }
                 if(String(selectedTiles[i].set)=="INNS"){
-                    htmlUsedTiles_inns +='<div style="opacity:'+String(opacity)+'; border:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
+                    htmlUsedTiles_inns +='<div style="opacity:'+String(opacity)+';  border-bottom:4px solid ' +String( borderColorbottom)+'; border-top:4px solid ' +String( borderColor)+';  border-top:4px solid ' +String( borderColor)+';   border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 4px 4px ' +String(borderShadow)+';">';
                     htmlUsedTiles_inns +='<div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
                     htmlUsedTiles_inns +='</div>'
                 }
                 if(String(selectedTiles[i].set)=="RIVER"){
-                    htmlUsedTiles_river +='<div style="opacity:'+String(opacity)+'; border:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
+                    htmlUsedTiles_river +='<div style="opacity:'+String(opacity)+'; border-bottom:4px solid ' +String( borderColorbottom)+'; border-top:4px solid ' +String( borderColor)+';  border-top:4px solid ' +String( borderColor)+';    border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 4px 4px ' +String(borderShadow)+';">';
                     htmlUsedTiles_river +='<div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
                     htmlUsedTiles_river +='</div>'
                 }
@@ -233,27 +233,27 @@ function printTiles(){
 
             opacity = leftTiles[i] === 0 ? '0.4' : '1';
 
-            borderShadow = leftTiles[i] > 0 ? 'rgba(0,0,0,0.19)': '0' ;
+            borderShadow = leftTiles[i] > 0 ? '#d9cccc': 'transparent' ;
 
             console.log(String(isItemInArray( matches,leftTiles[i] )))
 
             if(matches.includes(selectedTiles[i].id )==true){borderColor = 'blue' }else{
-                borderColor = 'none';
-                if(isItemInArray( leftTiles[i] < qtyTiles[i] )==true){borderColor = 'red' }
+                borderColorbottom = 'none';
+                borderColorbottom = leftTiles[i] < qtyTiles[i] ? 'red' : 'white';
             }
 
             if(String(selectedTiles[i].set)=="BASE"){
-                htmlTiles_base +='<div style="opacity:'+String(opacity)+'; border:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
+                htmlTiles_base +='<div style="opacity:'+String(opacity)+'; border-bottom:4px solid ' +String( borderColorbottom)+'; border-top:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 4px 4px ' +String(borderShadow)+';">';
                 htmlTiles_base +='<div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
                 htmlTiles_base +='</div>'
             }
             if(String(selectedTiles[i].set)=="INNS"){
-                htmlTiles_inns +='<div style="opacity:'+String(opacity)+'; border:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
+                htmlTiles_inns +='<div style="opacity:'+String(opacity)+'; border-bottom:4px solid ' +String( borderColorbottom)+'; border-top:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 4px 4px ' +String(borderShadow)+';">';
                 htmlTiles_inns +='<div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
                 htmlTiles_inns +='</div>'
             }
             if(String(selectedTiles[i].set)=="RIVER"){
-                htmlTiles_river +='<div style="opacity:'+String(opacity)+'; border:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
+                htmlTiles_river +='<div style="opacity:'+String(opacity)+'; border-bottom:4px solid ' +String( borderColorbottom)+'; border-top:4px solid ' +String( borderColor)+'; border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 4px 4px ' +String(borderShadow)+';">';
                 htmlTiles_river +='<div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
                 htmlTiles_river +='</div>'
             }
@@ -265,26 +265,27 @@ function printTiles(){
             i=matches[j];
             opacity = leftTiles[i] === 0 ? '0.4' : '1';
 
-            borderShadow = leftTiles[i] > 0 ? 'rgba(0,0,0,0.19)': '0' ;
+            borderShadow = leftTiles[i] > 0 ? '#d9cccc': 'transparent' ;
+
 
             if(matches.includes(selectedTiles[i].id )==true){borderColor = 'blue' }else{
-                borderColor = 'none';
-                if(isItemInArray( leftTiles[i] < qtyTiles[i] )==true){borderColor = 'red' }
+                borderColorbottom = 'none';
+                borderColorbottom = leftTiles[i] < qtyTiles[i] ? 'red' : 'white';
             }
 
             if (leftTiles[i] > 0){
                 if(String(selectedTiles[i].set)=="BASE"){
-                    htmlUsedTiles_base +='<div style="opacity:'+String(opacity)+'; border:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
+                    htmlUsedTiles_base +='<div style="opacity:'+String(opacity)+'; border-bottom:4px solid ' +String( borderColorbottom)+'; border-top:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 4px 4px ' +String(borderShadow)+';">';
                     htmlUsedTiles_base +='<div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
                     htmlUsedTiles_base +='</div>'
                 }
                 if(String(selectedTiles[i].set)=="INNS"){
-                    htmlUsedTiles_inns +='<div style="opacity:'+String(opacity)+'; border:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
+                    htmlUsedTiles_inns +='<div style="opacity:'+String(opacity)+'; border-bottom:4px solid ' +String( borderColorbottom)+'; border-top:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 4px 4px ' +String(borderShadow)+';">';
                     htmlUsedTiles_inns +='<div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
                     htmlUsedTiles_inns +='</div>'
                 }
                 if(String(selectedTiles[i].set)=="RIVER"){
-                    htmlUsedTiles_river +='<div style="opacity:'+String(opacity)+'; border:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 0 8px 16px 0' +String(borderShadow)+', 0 6px 20px 0 ' +String(borderShadow)+';">';
+                    htmlUsedTiles_river +='<div style="opacity:'+String(opacity)+';  border-bottom:4px solid ' +String( borderColorbottom)+'; border-top:4px solid ' +String( borderColor)+';  border-radius: 5px;background:url(//mecadesign3d.com/wp-content/uploads/2022/07/test-1.jpg); width:'+String(squaresize)+'; height:'+String(squaresize)+'; background-position: 0% -'+String(selectedTiles[i].id * 100)+'%; background-size:267px 7298px; display: inline-flex; margin: 10px; align-items:flex-end; box-shadow: 4px 4px ' +String(borderShadow)+';">';
                     htmlUsedTiles_river +='<div style="font-weigth:bold; font-size:16px; font-color:black; background-color:rgba(255,255,255,0.8); width:20px; height: 20px;padding: 5px; text-align: center; border: 1px solid #333">'+String(leftTiles[i]+"/"+qtyTiles[i])+'</div>';
                     htmlUsedTiles_river +='</div>'
                 }
