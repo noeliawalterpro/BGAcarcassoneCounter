@@ -2,7 +2,7 @@
 // @name BGA OPEN LEFT TILES INNS
 // @description  BGA Carcassone Counter of Tiles
 // @author       Noelia Walter
-// @version      0.9.4
+// @version      0.9.5
 // @match https://boardgamearena.com/*
 // @updateURL    https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
 // @downloadURL  https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
@@ -45,6 +45,8 @@ function openTab(tab) {
     }
     document.getElementById(tab).style.display = "block";
 };
+
+
 
 function counterTile() {
 
@@ -198,16 +200,16 @@ function counterTile() {
 
     }
 
-  
+
 
     document.getElementById('tiles-remain').innerHTML ='<div><li>RemaingTiles '+ String(remaningTiles)+' </li></div>';
 
     document.getElementById('base-tab').innerHTML ='<h2>Base</h2><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;">'+htmlTiles_base+'</div>';
-    document.getElementById('base-left').innerHTML='<h2>River</h2><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr ;">'+htmlUsedTiles_base+'</div>';
+    document.getElementById('base-left').innerHTML='<h2>Base</h2><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr ;">'+htmlUsedTiles_base+'</div>';
 
     if(innsSet==true){
         document.getElementById('inns-tab').innerHTML ='<h2>Inns</h2><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;">'+htmlTiles_inns+'</div>';
-        document.getElementById('inns-left').innerHTML='<h2>River</h2><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr ;">'+htmlUsedTiles_inns+'</div>';
+        document.getElementById('inns-left').innerHTML='<h2>Inns</h2><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr ;">'+htmlUsedTiles_inns+'</div>';
     }
     if(riverSet==true){
         document.getElementById('river-tab').innerHTML ='<h2>River</h2><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;">'+htmlTiles_river+'</div>';
@@ -243,7 +245,6 @@ background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 
 div#leftTile {
     display: none;
-    grid-template-columns: 1fr 1fr 1fr;
     overflow-y: scroll;
 height: 60vh;
 }
