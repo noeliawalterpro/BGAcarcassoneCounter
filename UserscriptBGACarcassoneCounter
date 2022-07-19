@@ -2,7 +2,7 @@
 // @name BGA OPEN LEFT TILES INNS
 // @description  BGA Carcassone Counter of Tiles
 // @author       Noelia Walter
-// @version      0.9.3
+// @version      0.9.9
 // @match https://boardgamearena.com/*
 // @updateURL    https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
 // @downloadURL  https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
@@ -232,16 +232,16 @@ function counterTile() {
 
     document.getElementById('tiles-remain').innerHTML ='<div><li>RemaingTiles '+ String(remaningTiles)+' </li></div>';
 
-    document.getElementById('base-tab').innerHTML ='<h3>Base</h3><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;">'+htmlTiles_base+'</div>';
-    document.getElementById('base-left').innerHTML='<h3>Base</h3><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;">'+htmlUsedTiles_base+'</div>';
+    document.getElementById('base-tab').innerHTML ='<h3>Base</h3><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr;">'+htmlTiles_base+'</div>';
+    document.getElementById('base-left').innerHTML='<h3>Base</h3><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr ;">'+htmlUsedTiles_base+'</div>';
 
     if(innsSet==true){
-        document.getElementById('inns-tab').innerHTML ='<h3>Inns</h3><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;">'+htmlTiles_inns+'</div>';
-        document.getElementById('inns-left').innerHTML='<h3>Inns</h3><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;">'+htmlUsedTiles_inns+'</div>';
+        document.getElementById('inns-tab').innerHTML ='<h3>Inns</h3><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr ;">'+htmlTiles_inns+'</div>';
+        document.getElementById('inns-left').innerHTML='<h3>Inns</h3><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr ;">'+htmlUsedTiles_inns+'</div>';
     }
     if(riverSet==true){
-        document.getElementById('river-tab').innerHTML ='<h3>River</h3><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;">'+htmlTiles_river+'</div>';
-        document.getElementById('river-left').innerHTML='<h3>River</h3><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;">'+htmlUsedTiles_river+'</div>';
+        document.getElementById('river-tab').innerHTML ='<h3>River</h3><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr ;">'+htmlTiles_river+'</div>';
+        document.getElementById('river-left').innerHTML='<h3>River</h3><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr ;">'+htmlUsedTiles_river+'</div>';
     }
 
     /// END on the of the turn
@@ -272,7 +272,7 @@ background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
 
 div#leftTile {
     display: none;
-    overflow-y: scroll;
+   
 height: 60vh;
 }
 
@@ -282,9 +282,11 @@ background-color:  #f8f8f8;
 margin: auto;
 padding: 20px;
 border: 1px solid #888;
-width: 80%;
+ width: 380px;
 height:80vh;
-overflow-y:scroll;
+overflow-y: auto;
+position:absolute;
+left:0px;
 }
 
 /* The Close Button */
@@ -412,6 +414,7 @@ const box = document.getElementById('leftTile');
 const box2 = document.getElementById('allTile');
 // When the user clicks the button, open the modal
 btn.onclick = function(){
+    document.getElementById('fullscreen').click();
     modal.style.display = "block";
     btn2.style.display = 'block';//hide
     btn3.style.display = 'none';//show
