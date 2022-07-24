@@ -2,7 +2,7 @@
 // @name BGA OPEN LEFT TILES INNS
 // @description  BGA Carcassone Counter of Tiles
 // @author       Noelia Walter
-// @version      1.0.4
+// @version      1.0.5
 // @match https://boardgamearena.com/*
 // @updateURL    https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
 // @downloadURL  https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
@@ -301,23 +301,23 @@ function printTiles(){
 
     document.getElementById('tiles-remain').innerHTML ='<div><h3>RemaingTiles '+ String(remaningTiles)+' </h3></div>';
 
-    document.getElementById('base-tab').innerHTML ='<h3>Base</h3><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr;">'+htmlTiles_base+'</div>';
-    document.getElementById('base-left').innerHTML='<h3>Base</h3><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr ;">'+htmlUsedTiles_base+'</div>';
+    document.getElementById('base-tab').innerHTML ='<h3>Base</h3><div class="tile-box">'+htmlTiles_base+'</div>';
+    document.getElementById('base-left').innerHTML='<h3>Base</h3><div class="tile-box">'+htmlUsedTiles_base+'</div>';
 
     if(innsSet==true){
-        document.getElementById('inns-tab').innerHTML ='<h3>Inns</h3><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr ;">'+htmlTiles_inns+'</div>';
-        document.getElementById('inns-left').innerHTML='<h3>Inns</h3><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr ;">'+htmlUsedTiles_inns+'</div>';
+        document.getElementById('inns-tab').innerHTML ='<h3>Inns</h3><div class="tile-box" >'+htmlTiles_inns+'</div>';
+        document.getElementById('inns-left').innerHTML='<h3>Inns</h3><div class="tile-box"  >'+htmlUsedTiles_inns+'</div>';
     }
     if(riverSet==true){
-        document.getElementById('river-tab').innerHTML ='<h3>River</h3><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr ;">'+htmlTiles_river+'</div>';
-        document.getElementById('river-left').innerHTML='<h3>River</h3><div style="display: grid; background: #f8f8f8;grid-template-columns: 1fr 1fr 1fr ;">'+htmlUsedTiles_river+'</div>';
+        document.getElementById('river-tab').innerHTML ='<h3>River</h3><div  class="tile-box" >'+htmlTiles_river+'</div>';
+        document.getElementById('river-left').innerHTML='<h3>River</h3><div class="tile-box" >'+htmlUsedTiles_river+'</div>';
     }
 
     /// END on the of the turn
 }
 
 
-newElement.innerHTML=`<div id="modal-tile-box" style="background: #f8f8f8;box-shadow: 3px 3px 3px dimgray;position: fixed;bottom: 0px;left:0;padding: 10px;font-size:14px; width: 200px;z-index: 999;"></div>`;
+newElement.innerHTML=`<div id="modal-tile-box" style="max-width: 100vw; background: #f8f8f8;box-shadow: 3px 3px 3px dimgray;position: fixed;bottom: 0px;left:0;padding: 10px;font-size:14px; width: 200px;z-index: 999;"></div>`;
 document.getElementById('modal-tile-box').innerHTML +=`<style>
 body {font-family: Arial, Helvetica, sans-serif;}
 
@@ -336,7 +336,7 @@ width: 100%; /* Full width */
 height: 100%; /* Full height */
 overflow: auto; /* Enable scroll if needed */
 background-color: #f8f8f8; /* Fallback color */
-background-color:rgba(181, 255, 200, 0.1);
+background-color:rgba(255, 255, 255, 0.24);
 }
 
 div#leftTile {
@@ -356,6 +356,7 @@ max-height:80vh;
 overflow-y: auto;
 position:absolute;
 left:0px;
+max-width: 100vw;
 }
 
 /* The Close Button */
@@ -392,6 +393,11 @@ color: #000;
 text-decoration: none;
 cursor: pointer;
 }
+.tile-box{
+display: flex;
+background: #f8f8f8;
+flex-wrap:wrap;
+}
 </style>
 </head>
 <body>
@@ -399,6 +405,8 @@ cursor: pointer;
 <h2>Tiles Counter</h2>
 
 <h3>Tile Search</h3>
+<div id="myModalSearch" class="modal">
+<div class="modal-content">
 <ul>
    <li> C for City</li>
    <li> R for Road</li>
@@ -409,9 +417,11 @@ cursor: pointer;
 <p>For example, searching for "FFWF" will match the first tile displayed below.</p>
 
 <p>Note that the sequence must be created by going around the tile in a clockwise direction.</p>
+</div>
+</div>
 
 
-
+<div>
 <input id="inputSearch" type=text maxlength=4  placeholder="Try typing CCRC">
 <hr>
 <div id="searchResult">no results yet..</div>
@@ -420,15 +430,25 @@ cursor: pointer;
 <br>
 
 <!-- Trigger/Count Tiles Left -->
-<button id="myBtn" style="    border: 0;
-padding: 20px;
-  padding-top: 20px;
-  padding-right: 20px;
-  padding-bottom: 20px;
-  padding-left: 20px;
-width: 100%;
+<button id="myBtnS" style="    border: 0;
+padding: 10px;
+
+width: 80%;
 background: #73C13C;
-font-size: 20px;
+font-size: 18px;
+margin-bottom:20px;
+margin-left: 10%;
+margin-right: 10%;
+box-shadow: 5px 5px green;">Help Search Tile </button>
+
+<button id="myBtn" style="    border: 0;
+padding: 10px;
+
+width: 80%;
+background: #73C13C;
+font-size: 18px;
+margin-left: 10%;
+margin-right: 10%;
 box-shadow: 5px 5px green;">Count Tiles </button>
 
 
@@ -458,7 +478,7 @@ box-shadow: 5px 5px green;">Count Tiles </button>
 <br>
 <button id="myBtn2" style="    border: 0;
 padding: 10px;
-width: 100%;
+width: 85%;
 grid-column:1/3;
 color:white;
 background: blue;
@@ -502,17 +522,21 @@ box-shadow: 5px 5px green;">Show Only Left Tiles<span id="arrowtop">  </button>
 
 
 var modal = document.getElementById("myModal");
+var modalS = document.getElementById("myModalSearch");
 
 
 
 // Get the button that opens the modal
 var btn = document.getElementById("myBtn");
-
+var btnS = document.getElementById("myBtnS");
 // Get the <span> element that closes the modal
 var span = document.getElementsByClassName("close")[0];
 const box = document.getElementById('leftTile');
 const box2 = document.getElementById('allTile');
 // When the user clicks the button, open the modal
+btnS.onclick = function(){
+     modalS.style.display = "block";
+}
 btn.onclick = function(){
     document.getElementById('fullscreen').click();
     document.getElementById('zoomout').click();
@@ -568,6 +592,11 @@ span.onclick = function() {
 window.onclick = function(event) {
     if (event.target == modal) {
         modal.style.display = "none";
+
+    }
+    if (event.target == modalS) {
+        modalS.style.display = "none";
+
     }
 };
 
@@ -636,6 +665,7 @@ function statisticsTile(){
 };
 
 modal.style.display = "none";
+modalS.style.display = "none";
 
 document.getElementById('fullscreen').click();
 document.getElementById('zoomout').click();
