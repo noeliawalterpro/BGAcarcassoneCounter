@@ -2,7 +2,7 @@
 // @name BGA OPEN LEFT TILES INNS
 // @description  BGA Carcassone Counter of Tiles
 // @author       Noelia Walter
-// @version      1.0.6
+// @version      1.1
 // @match https://boardgamearena.com/*
 // @updateURL    https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
 // @downloadURL  https://raw.githubusercontent.com/noeliawalterpro/BGAcarcassoneCounter/main/UserscriptBGACarcassoneCounter
@@ -27,7 +27,7 @@ var innsAndCathedrals=document.getElementById('menu_option_value_103').innerHTML
 var builders=document.getElementById('menu_option_value_104').innerHTML;
 var htmlUsedTiles="";
 var baseSet =true;
-var innsSet=innsAndCathedrals=="Sí"||innsAndCathedrals=="Yes";
+var innsSet=innsAndCathedrals=="Sí"||innsAndCathedrals=="Yes"||innsAndCathedrals=="Sólo las losetas"||innsAndCathedrals=="Tiles only";
 var riverSet=river=="Sí"||river=="Yes";
 var remaningTiles;
 var selectedTiles;
@@ -108,7 +108,8 @@ function counterTile() {
 
     console.log("expansions");
     var Bga_base=[[1],[3,2],[6,5,4],[8,7],[11,10,9],[13,12],[14],[16,15],[18,17],[21,20,19],[26,25,24,23,22],[29,28,27],[32,31,30],[35,34,33],[39,38,37,36],[47,46,45,44,43,42,41,40],[56,55,54,53,52,51,50,49,48],[60,59,58,57],[61],[65,64,63,62],[67,66],[68],[71,70,69],[72]];
-    var Bga_inns=[[73],[74],[75],[76],[77],[78],[79],[80],[81,82],[83],[84],[85],[89],[90]]
+    var Bga_inns=[[73],[74],[75],[76],[77],[78],[79],[80],[81,82],[83],[84],[85],[86],[87],[88],[89],[90]];
+    var empty=[[0]];
     var Bga_river=[[115],[116,117],[118],[119],[120,121],[122],[123],[124],[125],[126]];
 
     var qty_base=[1,2,3,2,3,2,1,2,2,3,5,3,3,3,4,8,9,4,1,4,2,1,3,1];
@@ -121,16 +122,19 @@ function counterTile() {
     Bga_TileArt=Bga_TileArt.concat(Bga_base);
     qtyTiles=qtyTiles.concat(qty_base);
     state2=state2.concat(qty_base);
-    if(innsSet==true){
-        Bga_TileArt=Bga_TileArt.concat(Bga_inns);
-        qtyTiles=qtyTiles.concat(qty_inns);
-        state2=state2.concat(qty_inns);
-    }
+    
     if(riverSet==true){
+
         Bga_TileArt=Bga_TileArt.concat(Bga_river);
         qtyTiles=qtyTiles.concat(qty_river);
         state2=state2.concat(qty_river);
     }
+    if(innsSet==true ){
+        Bga_TileArt=Bga_TileArt.concat(Bga_inns);
+        qtyTiles=qtyTiles.concat(qty_inns);
+        state2=state2.concat(qty_inns);
+    }
+
 
     selectedTiles = allTiles.filter((tile) => {
         return (baseSet === true && tile.set === "BASE" || riverSet === true && tile.set === "RIVER" || innsSet === true && tile.set === "INNS") });
